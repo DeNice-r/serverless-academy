@@ -27,7 +27,7 @@ function handle_error(e) {
         process.exit(1);
     }
     else if (e.response.statusCode === 400) {
-        console.log(`Chat id is probably invalid. Please set a valid chat id: ${run_command} set-chat-id <chat_id>`);
+        console.log(`Chat id is probably invalid, or you haven't sent /start to the bot. If the latter is false then please set a valid chat id: ${run_command} set-chat-id <chat_id>`);
         process.exit(1);
     }
     else
