@@ -11,11 +11,9 @@ let questions = [{type: 'input', name: 'name', message: "Enter the user's name. 
         message: "Choose the user's gender: "
     },
     {type: 'number', name: 'age', message: "Enter the user's age: "},
-    {type: 'confirm', name: 'search', message: "Would you like to search for a specific user in DB?: "},
-    {type: 'input', name: 'name', message: "Enter name of the user you wanna find in DB: "},
+    {type: 'confirm', name: 'search', message: "Would you like to search for a specific user in the DB?: "},
+    {type: 'input', name: 'name', message: "Enter the name of the user you wanna find in the DB: "},
 ]
-
-let new_user;
 
 
 function read_db() {
@@ -36,6 +34,7 @@ function add_user(user) {
     write_db(records);
 }
 
+let new_user;
 do {
     await inquirer.prompt(questions[0])
         .then(async answers => {
@@ -57,7 +56,7 @@ await inquirer.prompt(questions[3]).then(async answers => {
         await inquirer.prompt(questions[4]).then(answers => {
             let user = records.find(user => user.name.toLowerCase() === answers.name.toLowerCase());
             if (user) {
-                console.log(`User ${user.name} was found.`);
+                console.log(`User ${user.name} was found:`);
                 console.log(user);
             } else {
                 console.log('User not found.');
