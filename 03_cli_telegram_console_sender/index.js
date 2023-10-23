@@ -1,4 +1,4 @@
-import telegram from 'node-telegram-bot-api';
+import Telegram from 'node-telegram-bot-api';
 import {Command} from "commander";
 import {load_dotenv, supplement_dotenv} from "./dotenv.js";
 import process from 'node:process';
@@ -35,7 +35,7 @@ function handle_error(e) {
 }
 
 
-const bot = new telegram(token, {polling: false});
+const bot = new Telegram(token, {polling: false});
 const program = new Command();
 
 program.name(run_command)
