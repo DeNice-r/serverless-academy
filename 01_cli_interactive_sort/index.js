@@ -1,31 +1,32 @@
 import * as readline from 'node:readline/promises';
-import { stdin as input, stdout as output } from 'node:process';
+import {stdin as input, stdout as output} from 'node:process';
 
 const rl = readline.createInterface({
     input: input,
     output: output
 });
 
+// beta 1 alpha 9 delta Kappa 3 gamma 4 zeta 5 eta 11 epsilon -7 iota -8 theta -8 kappa Beta
+
 await main().then(() => rl.close());
 
 async function main() {
     let values, words, numbers, choice,
-    question = "Please enter a few words or numbers separated by a space: ",
-    menu = "Please choose an option:\n" +
-        "1. Sort words alphabetically\n" +
-        "2. Show numbers from lesser to greater\n" +
-        "3. Show numbers from bigger to smaller\n" +
-        "4. Display words in ascending order by number of letters in the word\n" +
-        "5. Show only unique words\n" +
-        "6. Display only unique values from the set of words and numbers\n" +
-        "exit. Stop the application\n" +
-        "Your choice: ";
+        question = "Please enter a few words or numbers separated by a space: ",
+        menu = "Please choose an option:\n" +
+            "1. Sort words alphabetically\n" +
+            "2. Show numbers from lesser to greater\n" +
+            "3. Show numbers from bigger to smaller\n" +
+            "4. Display words in ascending order by number of letters in the word\n" +
+            "5. Show only unique words\n" +
+            "6. Display only unique values from the set of words and numbers\n" +
+            "exit. Stop the application\n" +
+            "Your choice: ";
 
     do {
         values = undefined;
-        while (typeof values !== "object" ||  values.length < 2) {
+        while (typeof values !== "object" || values.length < 2) {
             await rl.question(question).then((answer) => {
-                // answer = "beta 1 alpha 9 delta kappa 3 gamma 4 zeta 5 eta 11 epsilon -7 iota -8 theta -8 kappa beta";
                 values = answer.split(" ");
                 words = [];
                 numbers = [];
@@ -52,7 +53,7 @@ async function main() {
 
         switch (choice) {
             case "1":
-                words.sort();
+                words.sort((a, b) => a.localeCompare(b));
                 console.log(words)
                 break;
             case "2":
@@ -68,10 +69,21 @@ async function main() {
                 console.log(words)
                 break;
             case "5":
-                words = [...new Set(words)];
-                console.log(words)
+                // In context of words, words written in non-identical cases are considered identical.
+                // Yet to preserve the original case of one of the copies, the words are not converted to lowercase.
+                let uniqueWords = {};
+
+                let lcWord;
+                for (let i = 0; i < words.length; i++) {
+                    lcWord = words[i].toLowerCase();
+                    if (!(lcWord  in uniqueWords))
+                        uniqueWords[lcWord] = words[i];
+                }
+
+                console.log(Object.values(uniqueWords))
                 break;
             case "6":
+                // In context of values, words written in non-identical cases are considered different
                 values = [...new Set(values)];
                 console.log(values)
                 break;
