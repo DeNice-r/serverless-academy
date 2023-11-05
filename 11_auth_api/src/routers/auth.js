@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post('/sign-up', async (req, res) => {
     try {
-        res.send({success: true, ...await signUp(req.body.email, req.body.password)});
+        res.send({success: true, data: await signUp(req.body.email, req.body.password)});
     } catch (e) {
         if (e instanceof EmailTakenError)
             res.status(409)
@@ -20,7 +20,7 @@ router.post('/sign-up', async (req, res) => {
 
 router.post('/sign-in', async (req, res) => {
     try {
-        res.send({success: true, ...await signIn(req.body.email, req.body.password)});
+        res.send({success: true, data: await signIn(req.body.email, req.body.password)});
     } catch (e) {
         if (e instanceof InvalidCredentialsError)
             res.status(404)
