@@ -1,7 +1,7 @@
 import pool from "./pool.js";
 
 
-export async function addToken(token, data) {
+export async function createToken(token, data) {
     try {
         return await pool.query(
             `INSERT INTO tokens (token, user_id, expires_at) VALUES ($1, $2, to_timestamp($3)) RETURNING *`,

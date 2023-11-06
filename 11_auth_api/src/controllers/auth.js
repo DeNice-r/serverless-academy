@@ -1,5 +1,5 @@
 import {compare} from "bcrypt";
-import {addUser, getUserByEmail} from "../services/users.js";
+import {createUser, getUserByEmail} from "../services/users.js";
 import {generateHash, generateTokens, isEmailValid, isPasswordValid} from "../utils/helper.js";
 import {InvalidCredentialsError} from "../utils/errors.js";
 
@@ -13,7 +13,7 @@ export async function signUp(email, password) {
 
     try {
         const password_hash = await generateHash(password);
-        user = await addUser(email, password_hash);
+        user = await createUser(email, password_hash);
     } catch (e) {
         console.log(e);
         throw e;

@@ -5,7 +5,7 @@ import process from 'node:process';
 loadDotenv()
 
 
-function get_env_lines() {
+function getEnvLines() {
     if (!fs.existsSync('.env')) {
         fs.writeFileSync('.env', '');
         return [];
@@ -15,7 +15,7 @@ function get_env_lines() {
 
 
 function loadDotenv() {
-    let env_lines = get_env_lines()
+    let env_lines = getEnvLines()
     for (let line of env_lines) {
         if (line.length > 0) {
             let parts = line.split('=');

@@ -1,7 +1,7 @@
 import {hash, genSalt} from "bcrypt";
 import process from "node:process";
 import jwt from "jsonwebtoken";
-import {addToken} from "../services/tokens.js";
+import {createToken} from "../services/tokens.js";
 
 
 const SALT_ROUNDS = +process.env.SALT_ROUNDS || 12,
@@ -31,8 +31,8 @@ export async function generateTokens(user_id) {
     };
 
     await Promise.all([
-        addToken(tokens.accessToken, jwt.verify(tokens.accessToken, JWT_ACCESS_SECRET)),
-        addToken(tokens.refreshToken, jwt.verify(tokens.refreshToken, JWT_REFRESH_SECRET))
+        createToken(tokens.accessToken, jwt.verify(tokens.accessToken, JWT_ACCESS_SECRET)),
+        createToken(tokens.refreshToken, jwt.verify(tokens.refreshToken, JWT_REFRESH_SECRET))
     ]);
 
     return tokens;

@@ -2,7 +2,7 @@ import pool from "./pool.js";
 import {EmailTakenError, InvalidCredentialsError, InvalidIdError} from "../utils/errors.js";
 
 
-export async function addUser(email, password_hash) {
+export async function createUser(email, password_hash) {
     let result;
     try {
         result = await pool.query(
