@@ -5,22 +5,17 @@ import {EmailTakenError, InvalidCredentialsError, InvalidIdError} from "../utils
 export async function createUser(email, password_hash) {
     let result;
     try {
-        result = await pool.query(
+        return (await pool.query(
             'INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING *',
             [email, password_hash]
-        );
+        )).rows[0];
     } catch (e) {
         console.log(e);
-
         if (e.code === "23505") {
             throw new EmailTakenError();
         }
-
         throw e;
     }
-
-    // No need to check if result.rows.length !== 0 because we are using RETURNING * in the query
-    return result.rows[0]
 }
 
 

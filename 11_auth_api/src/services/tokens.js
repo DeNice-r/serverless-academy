@@ -3,10 +3,10 @@ import pool from "./pool.js";
 
 export async function createToken(token, data) {
     try {
-        return await pool.query(
+        return (await pool.query(
             `INSERT INTO tokens (token, user_id, expires_at) VALUES ($1, $2, to_timestamp($3)) RETURNING *`,
             [token, data.id, data.exp]
-        );
+        )).rows[0];
     } catch (e) {
         console.log(e);
         throw e;
