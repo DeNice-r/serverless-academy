@@ -1,5 +1,5 @@
 import pool from "./pool.js";
-import {PathTakenError} from "../utils/errors.js";
+import {PathTakenError, PathNotFoundError} from "../utils/errors.js";
 
 
 export async function createJson(path, json) {
@@ -30,7 +30,7 @@ export async function getJson(path) {
     }
 
     if (result.rowCount === 0) {
-        throw new Error(`No json found for path ${path}`);
+        throw new PathNotFoundError(path);
     }
 
     return result.rows[0];

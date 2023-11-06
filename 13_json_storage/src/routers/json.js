@@ -1,6 +1,6 @@
 import express from 'express';
 import {getJson, createJson} from "../services/jsons.js";
-import {PathTakenError} from "../utils/errors.js";
+import {PathNotFoundError, PathTakenError} from "../utils/errors.js";
 
 
 const router = express.Router();
@@ -11,7 +11,12 @@ router.get(/.+/, async (req, res) => {
         res.json((await getJson(path)).json);
     } catch (e) {
         console.log(e);
-        res.status(500).json({
+        if (e instanceof PathNotFoundError)
+            res.status(404)
+        else
+            res.status(500);
+
+        res.json({
             success: false,
             error: e.message
         });
